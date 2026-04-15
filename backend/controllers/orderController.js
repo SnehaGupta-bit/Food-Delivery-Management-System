@@ -19,17 +19,17 @@ export const placeOrder = async (req, res) => {
 
     // Transform items to match Order schema
     const transformedItems = items.map(item => ({
-      foodId: item.foodId,  // Corrected to match frontend and schema
+      foodId: item.foodId,
       name: item.name,
       price: item.price,
-      quantity: item.quantity,  // Corrected to match schema
+      quantity: item.quantity,
       image: item.image
     }));
 
     const order = new Order({
-      userId: userId,  // Corrected to match schema
+      userId: userId,
       items: transformedItems,
-      totalAmount: totalAmount,  // Corrected to match schema
+      totalAmount: totalAmount,
       deliveryAddress: deliveryAddress,
       paymentMethod: paymentMethod
     });
@@ -41,7 +41,7 @@ export const placeOrder = async (req, res) => {
       order: {
         id: order._id,
         items: order.items,
-        total: order.totalAmount,  // Corrected to match frontend expectation
+        total: order.totalAmount,
         status: order.orderStatus,
         createdAt: order.createdAt,
       },
@@ -62,9 +62,77 @@ export const getUserOrders = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
 
-    const orders = await Order.find({ userId: userId }).sort({ createdAt: -1 });  // Corrected to match schema
+    const orders = await Order.find({ userId: userId })
+      .sort({ createdAt: -1 })
+      .populate('deliveryAgent', 'name phone');
 
     res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ["Placed", "Preparing", "Out for Delivery", "Delivered", "Cancelled"];
+    
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { orderStatus: status },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Emit socket event for real-time update
+    if (req.app.get('io')) {
+      req.app.get('io').to(`order_${orderId}`).emit('orderStatusUpdate', {
+        orderId,
+        status
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Order status updated",
+      order
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const { status, page = 1, limit = 20 } = req.query;
+
+    const query = status ? { orderStatus: status } : {};
+
+    const orders = await Order.find(query)
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .populate('userId', 'name email phone')
+      .populate('deliveryAgent', 'name phone');
+
+    const count = await Order.countDocuments(query);
+
+    res.status(200).json({
+      success: true,
+      orders,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      total: count
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

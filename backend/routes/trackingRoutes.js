@@ -1,9 +1,11 @@
-const express = require('express');
+import express from "express";
+import { updateLocation, getOrderTracking, createTracking } from "../controllers/trackingController.js";
+import { protect } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
-const { updateLocation } = require('../controllers/trackingController');
-// You might have a specific middleware for delivery agents here
-const { protect } = require('../middleware/authMiddleware'); 
 
 router.put('/location', protect, updateLocation);
+router.get('/order/:orderId', protect, getOrderTracking);
+router.post('/create', protect, createTracking);
 
-module.exports = router;
+export default router;

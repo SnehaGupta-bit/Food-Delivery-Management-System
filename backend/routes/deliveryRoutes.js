@@ -1,10 +1,12 @@
-const express = require('express');
+import express from "express";
+import { assignDelivery, getAvailableAgents, getAgentOrders } from "../controllers/deliveryController.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { adminOnly } from "../middleware/adminMiddleware.js";
+
 const router = express.Router();
-const { assignDelivery } = require('../controllers/deliveryController');
-const { protect } = require('../middleware/authMiddleware');
-const { adminOnly } = require('../middleware/adminMiddleware');
 
 router.post('/assign', protect, adminOnly, assignDelivery);
+router.get('/agents/available', protect, adminOnly, getAvailableAgents);
+router.get('/agent/orders', protect, getAgentOrders);
 
-
-module.exports = router;
+export default router;
