@@ -1,9 +1,27 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState, useEffect } from "react";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  // Load cart from localStorage on mount
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("quickbite_cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error("Error loading cart:", error);
+      return [];
+    }
+  });
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("quickbite_cart", JSON.stringify(cartItems));
+    } catch (error) {
+      console.error("Error saving cart:", error);
+    }
+  }, [cartItems]);
 
   const addToCart = (item) => {
     setCartItems((prev) => {
@@ -24,7 +42,10 @@ export function CartProvider({ children }) {
     );
   };
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("quickbite_cart");
+  };
 
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
   const cartTotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);

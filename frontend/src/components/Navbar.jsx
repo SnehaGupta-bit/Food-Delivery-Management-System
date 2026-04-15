@@ -9,6 +9,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("quickbite_cart");
     setUser(null);
     navigate("/login");
   };
@@ -19,6 +20,8 @@ export default function Navbar() {
       <ul className="navbar-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Menu</Link></li>
+        <li><Link to="/mood">Mood Order</Link></li>
+        <li><Link to="/group">Group Order</Link></li>
         {user ? (
           <>
             <li><Link to="/orders">My Orders</Link></li>

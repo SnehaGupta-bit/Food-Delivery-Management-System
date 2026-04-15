@@ -6,6 +6,9 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import OrderHistory from "./pages/OrderHistory.jsx";
 import Cart from "./pages/Cart.jsx";
+import OrderTracking from "./pages/OrderTracking.jsx";
+import GroupOrder from "./pages/GroupOrder.jsx";
+import MoodOrder from "./pages/MoodOrder.jsx";
 import AIAssistant from "./components/AIAssistant.jsx";
 import "./index.css";
 
@@ -21,6 +24,9 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/orders"   element={<OrderHistory />} />
           <Route path="/cart"     element={<Cart />} />
+          <Route path="/tracking/:orderId" element={<OrderTracking />} />
+          <Route path="/group"    element={<GroupOrder />} />
+          <Route path="/mood"     element={<MoodOrder />} />
         </Routes>
         <AIAssistant />
       </div>

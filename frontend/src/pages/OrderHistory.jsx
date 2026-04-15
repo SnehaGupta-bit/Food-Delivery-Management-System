@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { getOrders } from "../services/api.js";
 
 const STATUS_CLASS = {
-  delivered: "order-status status-delivered",
-  pending:   "order-status status-pending",
-  cancelled: "order-status status-cancelled",
+  Delivered: "order-status status-delivered",
+  Placed: "order-status status-pending",
+  Preparing: "order-status status-pending",
+  "Out for Delivery": "order-status status-pending",
+  Cancelled: "order-status status-cancelled",
 };
 
 const FALLBACK = [
-  { _id:"ord001abc", status:"delivered", createdAt: new Date(Date.now()-86400000*2), total:748,
-    items:[{ name:"Margherita Pizza", emoji:"🍕", qty:2 }, { name:"Mango Lassi", emoji:"🥤", qty:1 }] },
-  { _id:"ord002xyz", status:"pending", createdAt: new Date(), total:399,
-    items:[{ name:"Smash Burger", emoji:"🍔", qty:1 }, { name:"Cold Brew Coffee", emoji:"☕", qty:1 }] },
+  { _id:"ord001abc", orderStatus:"Delivered", createdAt: new Date(Date.now()-86400000*2), totalAmount:748,
+    items:[{ name:"Margherita Pizza", emoji:"🍕", quantity:2 }, { name:"Mango Lassi", emoji:"🥤", quantity:1 }] },
+  { _id:"ord002xyz", orderStatus:"Placed", createdAt: new Date(), totalAmount:399,
+    items:[{ name:"Smash Burger", emoji:"🍔", quantity:1 }, { name:"Cold Brew Coffee", emoji:"☕", quantity:1 }] },
 ];
 
 export default function OrderHistory() {
@@ -53,16 +55,25 @@ export default function OrderHistory() {
                 })}
               </div>
             </div>
-            <span className={STATUS_CLASS[order.orderStatus] || "order-status status-pending"}>  // Corrected to match schema
-              {(order.orderStatus||"placed").charAt(0).toUpperCase()+(order.orderStatus||"placed").slice(1)}  // Corrected to match schema
-            </span>
+            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+              <span className={STATUS_CLASS[order.orderStatus] || "order-status status-pending"}>
+                {(order.orderStatus||"Placed").charAt(0).toUpperCase()+(order.orderStatus||"Placed").slice(1)}
+              </span>
+              {order.orderStatus !== "Delivered" && order.orderStatus !== "Cancelled" && (
+                <Link to={`/tracking/${order._id}`}>
+                  <button className="btn-glass" style={{ padding: "6px 14px", fontSize: 12 }}>
+                    Track 📍
+                  </button>
+                </Link>
+              )}
+            </div>
           </div>
           <div className="order-items">
             {(order.items||[]).map((item,i) => (
-              <span key={i} className="order-item-chip">{item.emoji||"🍽️"} {item.name} × {item.quantity}</span>  // Corrected to match schema
+              <span key={i} className="order-item-chip">{item.emoji||"🍽️"} {item.name} × {item.quantity}</span>
             ))}
           </div>
-          <div className="order-total">Total: ₹{order.totalAmount}</div>  // Corrected to match schema
+          <div className="order-total">Total: ₹{order.totalAmount}</div>
         </div>
       ))}
     </div>
