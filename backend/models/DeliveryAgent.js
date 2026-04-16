@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const deliveryAgentSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -11,4 +11,4 @@ const deliveryAgentSchema = new mongoose.Schema({
     isAvailable: { type: Boolean, default: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('DeliveryAgent', deliveryAgentSchema);
+export default mongoose.model('DeliveryAgent', deliveryAgentSchema);
