@@ -1,0 +1,485 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import "../styles/admin-panel.css";
+
+export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const [stats, setStats] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [vendors, setVendors] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [loading, setLoading] = useState(true);
+
+  // Check if user is logged in and is admin
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    if (!token || user.role !== 'admin') {
+      toast.error('Access denied. Admin credentials required.');
+      navigate('/admin/login');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('Please login first');
+        navigate('/admin/login');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3000/api/admin/dashboard', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setStats(data);
+      } else {
+        const errorData = await response.json();
+        console.error('Dashboard API error:', errorData);
+        toast.error(errorData.message || 'Failed to fetch dashboard data');
+        // Set default stats so UI still shows
+        setStats({
+          totalStats: { totalUsers: 0, totalVendors: 0, totalOrders: 0, totalRevenue: 0 },
+          todayStats: { todayUsers: 0, todayOrders: 0, todayRevenue: 0 },
+          orderStatusBreakdown: [],
+          topVendors: []
+        });
+      }
+    } catch (error) {
+      console.error('Dashboard fetch error:', error);
+      toast.error('Error connecting to server');
+      // Set default stats so UI still shows
+      setStats({
+        totalStats: { totalUsers: 0, totalVendors: 0, totalOrders: 0, totalRevenue: 0 },
+        todayStats: { todayUsers: 0, todayOrders: 0, todayRevenue: 0 },
+        orderStatusBreakdown: [],
+        topVendors: []
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/admin/users', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data.users || []);
+      } else {
+        console.error('Failed to fetch users');
+        setUsers([]);
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setUsers([]);
+    }
+  };
+
+  const fetchVendors = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/admin/vendors', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setVendors(data.vendors || []);
+      } else {
+        console.error('Failed to fetch vendors');
+        setVendors([]);
+      }
+    } catch (error) {
+      console.error('Error fetching vendors:', error);
+      setVendors([]);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/api/admin/orders', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setOrders(data.orders || []);
+      } else {
+        console.error('Failed to fetch orders');
+        setOrders([]);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      setOrders([]);
+    }
+  };
+
+  const verifyVendor = async (vendorId, isVerified) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/admin/vendors/${vendorId}/verify`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isVerified })
+      });
+
+      if (response.ok) {
+        toast.success(`Vendor ${isVerified ? 'verified' : 'unverified'} successfully`);
+        fetchVendors();
+      } else {
+        toast.error('Failed to update vendor status');
+      }
+    } catch (error) {
+      toast.error('Error updating vendor status');
+    }
+  };
+
+  const toggleVendorStatus = async (vendorId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/admin/vendors/${vendorId}/toggle-status`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        toast.success('Vendor status updated successfully');
+        fetchVendors();
+      } else {
+        toast.error('Failed to update vendor status');
+      }
+    } catch (error) {
+      toast.error('Error updating vendor status');
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'users') fetchUsers();
+    if (activeTab === 'vendors') fetchVendors();
+    if (activeTab === 'orders') fetchOrders();
+  }, [activeTab]);
+
+  if (loading) {
+    return (
+      <div className="admin-login-page" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="loading-container" style={{ minHeight: '400px' }}>
+          <div className="admin-loading-spinner" style={{ width: '3rem', height: '3rem', borderWidth: '3px' }}></div>
+          <p style={{ marginLeft: '1rem', color: 'var(--admin-primary)', fontWeight: 600 }}>Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    toast.success('Logged out successfully');
+    navigate('/admin/login');
+  };
+
+  return (
+    <div className="admin-login-page" style={{ position: 'relative', zIndex: 1, minHeight: '100vh' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ width: '100%', maxWidth: '80rem', margin: '0 auto', padding: '1.5rem', position: 'relative', zIndex: 2 }}
+      >
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--admin-primary)', marginBottom: '0.5rem' }}>
+              👨‍💼 Admin Dashboard
+            </h1>
+            <p style={{ color: 'var(--admin-text-secondary)' }}>Manage your platform</p>
+          </div>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => navigate('/panels')}
+              className="admin-back-button"
+            >
+              ← Back to Panels
+            </button>
+            <button
+              onClick={handleLogout}
+              className="admin-btn-primary"
+              style={{ width: 'auto', padding: '0.75rem 1.5rem', fontSize: '1rem' }}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+        
+        {/* Navigation Tabs */}
+        <div className="admin-nav">
+          {['dashboard', 'users', 'vendors', 'orders'].map((tab) => (
+            <button
+              key={tab}
+              className={`admin-nav-btn ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Dashboard Stats */}
+        {activeTab === 'dashboard' && stats && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="admin-dashboard"
+          >
+            {/* Stats Cards */}
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-icon">👥</div>
+                <div className="stat-value">{stats.totalStats.totalUsers}</div>
+                <div className="stat-label">Total Users</div>
+                <div className="stat-change">+{stats.todayStats.todayUsers} today</div>
+              </div>
+              
+              <div className="stat-card">
+                <div className="stat-icon">🏪</div>
+                <div className="stat-value">{stats.totalStats.totalVendors}</div>
+                <div className="stat-label">Total Vendors</div>
+              </div>
+              
+              <div className="stat-card">
+                <div className="stat-icon">📦</div>
+                <div className="stat-value">{stats.totalStats.totalOrders}</div>
+                <div className="stat-label">Total Orders</div>
+                <div className="stat-change">+{stats.todayStats.todayOrders} today</div>
+              </div>
+              
+              <div className="stat-card">
+                <div className="stat-icon">💰</div>
+                <div className="stat-value">₹{stats.totalStats.totalRevenue.toLocaleString()}</div>
+                <div className="stat-label">Total Revenue</div>
+                <div className="stat-change">+₹{stats.todayStats.todayRevenue} today</div>
+              </div>
+            </div>
+
+            {/* Order Status Breakdown */}
+            <div className="admin-section">
+              <h3>Order Status Breakdown</h3>
+              <div className="status-grid">
+                {stats.orderStatusBreakdown && stats.orderStatusBreakdown.length > 0 ? (
+                  stats.orderStatusBreakdown.map((status) => (
+                    <div key={status._id} className="status-item">
+                      <span className="status-name">{status._id || 'Unknown'}</span>
+                      <span className="status-count">{status.count}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No orders yet</p>
+                )}
+              </div>
+            </div>
+
+            {/* Top Vendors */}
+            <div className="admin-section">
+              <h3>Top Vendors</h3>
+              <div className="top-vendors">
+                {stats.topVendors && stats.topVendors.length > 0 ? (
+                  stats.topVendors.map((vendor, index) => (
+                    <div key={vendor._id} className="vendor-item">
+                      <span className="vendor-rank">#{index + 1}</span>
+                      <span className="vendor-name">{vendor.restaurantName}</span>
+                      <span className="vendor-orders">{vendor.orderCount} orders</span>
+                      <span className="vendor-rating">⭐ {vendor.rating}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No vendor data available</p>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="admin-table-container"
+          >
+            <h3>Users Management</h3>
+            <div className="admin-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users && users.length > 0 ? (
+                    users.map((user) => (
+                      <tr key={user._id}>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.phone || 'N/A'}</td>
+                        <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td>
+                          <button className="btn-danger-sm">Delete</button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" style={{ textAlign: 'center', color: 'var(--admin-text-muted)', padding: '2rem' }}>
+                        No users found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Vendors Tab */}
+        {activeTab === 'vendors' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="admin-table-container"
+          >
+            <h3>Vendors Management</h3>
+            <div className="admin-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Restaurant</th>
+                    <th>Owner</th>
+                    <th>Email</th>
+                    <th>Verified</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {vendors && vendors.length > 0 ? (
+                    vendors.map((vendor) => (
+                      <tr key={vendor._id}>
+                        <td>{vendor.restaurantName || 'N/A'}</td>
+                        <td>{vendor.name}</td>
+                        <td>{vendor.email}</td>
+                        <td>
+                          <span className={`status-badge ${vendor.isVerified ? 'verified' : 'unverified'}`}>
+                            {vendor.isVerified ? 'Verified' : 'Unverified'}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="action-buttons">
+                            <button
+                              className={`btn-sm ${vendor.isVerified ? 'btn-warning' : 'btn-success'}`}
+                              onClick={() => verifyVendor(vendor._id, !vendor.isVerified)}
+                            >
+                              {vendor.isVerified ? 'Unverify' : 'Verify'}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-gray-500 py-8">
+                        No vendors found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Orders Tab */}
+        {activeTab === 'orders' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="admin-table-container"
+          >
+            <h3>Orders Management</h3>
+            <div className="admin-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders && orders.length > 0 ? (
+                    orders.map((order) => (
+                      <tr key={order._id}>
+                        <td>#{order._id.slice(-8)}</td>
+                        <td>{order.userId?.name || 'N/A'}</td>
+                        <td>₹{order.totalAmount}</td>
+                        <td>
+                          <span className={`status-badge ${order.orderStatus.toLowerCase().replace(' ', '-')}`}>
+                            {order.orderStatus}
+                          </span>
+                        </td>
+                        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-gray-500 py-8">
+                        No orders found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+      </motion.div>
+    </div>
+  );
+}

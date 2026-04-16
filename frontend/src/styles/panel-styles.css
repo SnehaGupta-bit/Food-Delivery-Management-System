@@ -1,0 +1,490 @@
+/* ═══════════════════════════════════════════════════════════
+   PANEL STYLES MAIN FILE
+   Imports all individual panel stylesheets for organized styling
+   ═══════════════════════════════════════════════════════════ */
+
+/* Import Individual Panel Styles */
+@import './customer-panel.css';
+@import './vendor-panel.css';
+@import './delivery-panel.css';
+@import './admin-panel.css';
+
+/* ═══════════════════════════════════════════════════════════
+   SHARED PANEL STYLES
+   Common styles used across all panels
+   ═══════════════════════════════════════════════════════════ */
+
+/* Panel Selection Page */
+.panel-selection-page {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.panel-selection-container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.panel-selection-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.panel-selection-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #10b981, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.panel-selection-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.panel-card {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  transition: all 0.4s ease;
+}
+
+.panel-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Customer Panel Card */
+.panel-card.customer::before {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
+
+.panel-card.customer:hover {
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+}
+
+/* Vendor Panel Card */
+.panel-card.vendor::before {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+}
+
+.panel-card.vendor:hover {
+  box-shadow: 0 20px 60px rgba(249, 115, 22, 0.2);
+}
+
+/* Delivery Panel Card */
+.panel-card.delivery::before {
+  background: linear-gradient(135deg, #10b981, #047857);
+}
+
+.panel-card.delivery:hover {
+  box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
+}
+
+/* Admin Panel Card */
+.panel-card.admin::before {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.panel-card.admin:hover {
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+}
+
+.panel-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.panel-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #1e293b;
+}
+
+.panel-card-description {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.panel-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.panel-card-features li {
+  color: #475569;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panel-card-features li::before {
+  content: '✓';
+  color: #10b981;
+  font-weight: 700;
+}
+
+.panel-card-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.panel-card.customer .panel-card-button {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+}
+
+.panel-card.customer .panel-card-button:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+}
+
+.panel-card.vendor .panel-card-button {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+  color: white;
+}
+
+.panel-card.vendor .panel-card-button:hover {
+  background: linear-gradient(135deg, #ea580c, #b91c1c);
+  transform: translateY(-1px);
+}
+
+.panel-card.delivery .panel-card-button {
+  background: linear-gradient(135deg, #10b981, #047857);
+  color: white;
+}
+
+.panel-card.delivery .panel-card-button:hover {
+  background: linear-gradient(135deg, #059669, #065f46);
+  transform: translateY(-1px);
+}
+
+.panel-card.admin .panel-card-button {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: white;
+}
+
+.panel-card.admin .panel-card-button:hover {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  transform: translateY(-1px);
+}
+
+/* Back Button Styles */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+  transform: translateX(-2px);
+}
+
+.customer-back-button {
+  color: #3b82f6;
+}
+
+.customer-back-button:hover {
+  color: #2563eb;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.vendor-back-button {
+  color: #f97316;
+}
+
+.vendor-back-button:hover {
+  color: #ea580c;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.delivery-back-button {
+  color: #10b981;
+}
+
+.delivery-back-button:hover {
+  color: #059669;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.admin-back-button {
+  color: #8b5cf6;
+}
+
+.admin-back-button:hover {
+  color: #7c3aed;
+  background: rgba(139, 92, 246, 0.1);
+}
+
+/* Demo Credentials Styling */
+.demo-credentials {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.customer-demo {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.vendor-demo {
+  background: rgba(249, 115, 22, 0.05);
+  border-color: rgba(249, 115, 22, 0.2);
+}
+
+.delivery-demo {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.admin-demo {
+  background: rgba(139, 92, 246, 0.05);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.demo-credentials p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.demo-credentials strong {
+  color: #1e293b;
+}
+
+/* Loading States */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.loading-text {
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .panel-selection-page {
+    padding: 1rem;
+  }
+  
+  .panel-selection-title {
+    font-size: 2.5rem;
+  }
+  
+  .panel-selection-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .panel-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .panel-card {
+    padding: 1.5rem;
+  }
+  
+  .panel-card-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .panel-selection-title {
+    font-size: 2rem;
+  }
+  
+  .panel-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Animation Classes */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-animation {
+  animation-delay: var(--delay, 0s);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.transform {
+  transform: translateZ(0);
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}

@@ -1,0 +1,531 @@
+/* ═══════════════════════════════════════════════════════════
+   VENDOR PANEL STYLES - Orange/Red Theme
+   Professional restaurant management with warm, appetizing colors
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Vendor Panel Color Palette */
+  --vendor-primary: #f97316;          /* Orange 500 */
+  --vendor-primary-dark: #ea580c;     /* Orange 600 */
+  --vendor-primary-light: #fb923c;    /* Orange 400 */
+  --vendor-secondary: #dc2626;        /* Red 600 */
+  --vendor-accent: #fbbf24;           /* Amber 400 */
+  
+  /* Background Colors */
+  --vendor-bg-primary: #fff7ed;       /* Orange 50 */
+  --vendor-bg-secondary: #fed7aa;     /* Orange 200 */
+  --vendor-bg-tertiary: #fdba74;      /* Orange 300 */
+  
+  /* Text Colors */
+  --vendor-text-primary: #1c1917;     /* Stone 900 */
+  --vendor-text-secondary: #44403c;   /* Stone 700 */
+  --vendor-text-muted: #78716c;       /* Stone 500 */
+  
+  /* Glass Effects */
+  --vendor-glass-bg: rgba(249, 115, 22, 0.08);
+  --vendor-glass-border: rgba(249, 115, 22, 0.2);
+  --vendor-shadow: 0 8px 32px rgba(249, 115, 22, 0.15);
+}
+
+/* Vendor Panel Layout */
+.vendor-panel {
+  background: linear-gradient(135deg, var(--vendor-bg-primary) 0%, var(--vendor-bg-secondary) 100%);
+  min-height: 100vh;
+}
+
+.vendor-panel::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Vendor Login Page */
+.vendor-login-page {
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 50%, #fdba74 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.vendor-login-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px rgba(249, 115, 22, 0.15);
+  overflow: hidden;
+  max-width: 28rem;
+  width: 100%;
+  border: 1px solid var(--vendor-glass-border);
+}
+
+.vendor-login-header {
+  background: linear-gradient(135deg, var(--vendor-primary) 0%, var(--vendor-secondary) 100%);
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.vendor-login-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vendor-login-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+}
+
+/* Vendor Form Elements */
+.vendor-form-container {
+  padding: 2rem;
+}
+
+.vendor-form-field {
+  margin-bottom: 1.5rem;
+}
+
+.vendor-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vendor-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.vendor-form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.vendor-form-input:focus {
+  outline: none;
+  border-color: var(--vendor-primary);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.vendor-form-input::placeholder {
+  color: var(--vendor-text-muted);
+}
+
+/* Vendor Buttons */
+.vendor-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--vendor-primary) 0%, var(--vendor-secondary) 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.875rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--vendor-shadow);
+}
+
+.vendor-btn-primary:hover {
+  background: linear-gradient(135deg, var(--vendor-primary-dark) 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.25);
+}
+
+.vendor-btn-primary:active {
+  transform: translateY(0);
+}
+
+.vendor-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vendor-btn-secondary {
+  background: var(--vendor-glass-bg);
+  color: var(--vendor-primary);
+  border: 1px solid var(--vendor-glass-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vendor-btn-secondary:hover {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: var(--vendor-primary);
+}
+
+/* Vendor Navigation */
+.vendor-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--vendor-glass-border);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.vendor-nav-link {
+  color: var(--vendor-text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.vendor-nav-link:hover {
+  color: var(--vendor-primary);
+  background: var(--vendor-glass-bg);
+}
+
+.vendor-nav-link.active {
+  color: var(--vendor-primary);
+  background: rgba(249, 115, 22, 0.1);
+}
+
+/* Vendor Dashboard */
+.vendor-dashboard {
+  background: var(--vendor-bg-primary);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.vendor-dashboard-header {
+  background: linear-gradient(135deg, var(--vendor-primary) 0%, var(--vendor-secondary) 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--vendor-shadow);
+}
+
+.vendor-dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vendor-dashboard-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Vendor Cards */
+.vendor-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+  border: 1px solid rgba(249, 115, 22, 0.1);
+  transition: all 0.3s ease;
+}
+
+.vendor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
+}
+
+/* Vendor Menu Management */
+.vendor-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.vendor-menu-item {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+  border: 1px solid rgba(249, 115, 22, 0.1);
+  transition: all 0.3s ease;
+}
+
+.vendor-menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
+}
+
+.vendor-menu-item-image {
+  height: 200px;
+  background: linear-gradient(135deg, var(--vendor-bg-secondary), var(--vendor-bg-tertiary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.vendor-menu-item-content {
+  padding: 1.5rem;
+}
+
+.vendor-menu-item-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--vendor-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.vendor-menu-item-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--vendor-primary);
+  margin-bottom: 1rem;
+}
+
+.vendor-menu-item-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.vendor-btn-edit {
+  background: var(--vendor-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.vendor-btn-edit:hover {
+  background: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.vendor-btn-delete {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.vendor-btn-delete:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+/* Vendor Order Management */
+.vendor-orders-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+  border: 1px solid rgba(249, 115, 22, 0.1);
+}
+
+.vendor-order-item {
+  background: var(--vendor-bg-primary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--vendor-primary);
+  transition: all 0.3s ease;
+}
+
+.vendor-order-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);
+}
+
+.vendor-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vendor-order-id {
+  font-weight: 700;
+  color: var(--vendor-text-primary);
+  font-size: 1.1rem;
+}
+
+.vendor-order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.vendor-order-status.pending {
+  background: rgba(251, 191, 36, 0.2);
+  color: #d97706;
+}
+
+.vendor-order-status.preparing {
+  background: rgba(249, 115, 22, 0.2);
+  color: var(--vendor-primary);
+}
+
+.vendor-order-status.ready {
+  background: rgba(34, 197, 94, 0.2);
+  color: #059669;
+}
+
+/* Vendor Stats */
+.vendor-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.vendor-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+  border-left: 4px solid var(--vendor-primary);
+}
+
+.vendor-stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--vendor-primary);
+  margin-bottom: 0.5rem;
+}
+
+.vendor-stat-label {
+  color: var(--vendor-text-secondary);
+  font-weight: 500;
+}
+
+/* Vendor Loading States */
+.vendor-loading-spinner {
+  border: 2px solid rgba(249, 115, 22, 0.2);
+  border-top: 2px solid var(--vendor-primary);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spin 1s linear infinite;
+}
+
+/* Vendor Animations */
+@keyframes vendorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vendor-fade-in {
+  animation: vendorFadeIn 0.6s ease-out;
+}
+
+/* Vendor Responsive Design */
+@media (max-width: 768px) {
+  .vendor-login-card {
+    margin: 1rem;
+  }
+  
+  .vendor-dashboard {
+    padding: 1rem;
+  }
+  
+  .vendor-dashboard-header {
+    padding: 1.5rem;
+  }
+  
+  .vendor-dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .vendor-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vendor-menu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vendor-order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Vendor Success States */
+.vendor-success {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.1);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.vendor-warning {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.vendor-error {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+/* Vendor Form Enhancements */
+.vendor-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.vendor-form-textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.vendor-form-textarea:focus {
+  outline: none;
+  border-color: var(--vendor-primary);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.vendor-form-select {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e7e5e4;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+  cursor: pointer;
+}
+
+.vendor-form-select:focus {
+  outline: none;
+  border-color: var(--vendor-primary);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}

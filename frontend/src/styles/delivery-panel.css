@@ -1,0 +1,617 @@
+/* ═══════════════════════════════════════════════════════════
+   DELIVERY PARTNER PANEL STYLES - Green Theme
+   Professional delivery management with trust and reliability colors
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Delivery Panel Color Palette */
+  --delivery-primary: #10b981;        /* Emerald 500 */
+  --delivery-primary-dark: #059669;   /* Emerald 600 */
+  --delivery-primary-light: #34d399;  /* Emerald 400 */
+  --delivery-secondary: #047857;      /* Emerald 700 */
+  --delivery-accent: #06b6d4;         /* Cyan 500 */
+  
+  /* Background Colors */
+  --delivery-bg-primary: #ecfdf5;     /* Emerald 50 */
+  --delivery-bg-secondary: #d1fae5;   /* Emerald 100 */
+  --delivery-bg-tertiary: #a7f3d0;    /* Emerald 200 */
+  
+  /* Text Colors */
+  --delivery-text-primary: #1f2937;   /* Gray 800 */
+  --delivery-text-secondary: #4b5563; /* Gray 600 */
+  --delivery-text-muted: #6b7280;     /* Gray 500 */
+  
+  /* Glass Effects */
+  --delivery-glass-bg: rgba(16, 185, 129, 0.08);
+  --delivery-glass-border: rgba(16, 185, 129, 0.2);
+  --delivery-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+}
+
+/* Delivery Panel Layout */
+.delivery-panel {
+  background: linear-gradient(135deg, var(--delivery-bg-primary) 0%, var(--delivery-bg-secondary) 100%);
+  min-height: 100vh;
+}
+
+.delivery-panel::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Delivery Login Page */
+.delivery-login-page {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.delivery-login-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px rgba(16, 185, 129, 0.15);
+  overflow: hidden;
+  max-width: 28rem;
+  width: 100%;
+  border: 1px solid var(--delivery-glass-border);
+}
+
+.delivery-login-header {
+  background: linear-gradient(135deg, var(--delivery-primary) 0%, var(--delivery-secondary) 100%);
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.delivery-login-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.delivery-login-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+}
+
+/* Delivery Form Elements */
+.delivery-form-container {
+  padding: 2rem;
+}
+
+.delivery-form-field {
+  margin-bottom: 1.5rem;
+}
+
+.delivery-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--delivery-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.delivery-form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.delivery-form-input:focus {
+  outline: none;
+  border-color: var(--delivery-primary);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.delivery-form-input::placeholder {
+  color: var(--delivery-text-muted);
+}
+
+/* Delivery Buttons */
+.delivery-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--delivery-primary) 0%, var(--delivery-secondary) 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.875rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--delivery-shadow);
+}
+
+.delivery-btn-primary:hover {
+  background: linear-gradient(135deg, var(--delivery-primary-dark) 0%, #065f46 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25);
+}
+
+.delivery-btn-primary:active {
+  transform: translateY(0);
+}
+
+.delivery-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.delivery-btn-secondary {
+  background: var(--delivery-glass-bg);
+  color: var(--delivery-primary);
+  border: 1px solid var(--delivery-glass-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delivery-btn-secondary:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: var(--delivery-primary);
+}
+
+/* Delivery Navigation */
+.delivery-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--delivery-glass-border);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.delivery-nav-link {
+  color: var(--delivery-text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.delivery-nav-link:hover {
+  color: var(--delivery-primary);
+  background: var(--delivery-glass-bg);
+}
+
+.delivery-nav-link.active {
+  color: var(--delivery-primary);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* Delivery Dashboard */
+.delivery-dashboard {
+  background: var(--delivery-bg-primary);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.delivery-dashboard-header {
+  background: linear-gradient(135deg, var(--delivery-primary) 0%, var(--delivery-secondary) 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--delivery-shadow);
+}
+
+.delivery-dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.delivery-dashboard-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Delivery Status Toggle */
+.delivery-status-toggle {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  margin-bottom: 2rem;
+}
+
+.delivery-status-toggle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.delivery-status-toggle-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--delivery-text-primary);
+}
+
+.delivery-toggle-switch {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: #e5e7eb;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delivery-toggle-switch.active {
+  background: var(--delivery-primary);
+}
+
+.delivery-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.delivery-toggle-switch.active::after {
+  transform: translateX(30px);
+}
+
+/* Delivery Orders */
+.delivery-orders-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  margin-bottom: 2rem;
+}
+
+.delivery-order-item {
+  background: var(--delivery-bg-primary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--delivery-primary);
+  transition: all 0.3s ease;
+}
+
+.delivery-order-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+}
+
+.delivery-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.delivery-order-id {
+  font-weight: 700;
+  color: var(--delivery-text-primary);
+  font-size: 1.1rem;
+}
+
+.delivery-order-distance {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--delivery-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.delivery-order-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.delivery-order-address {
+  font-size: 0.875rem;
+  color: var(--delivery-text-secondary);
+}
+
+.delivery-order-payment {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--delivery-primary);
+  text-align: right;
+}
+
+.delivery-order-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.delivery-btn-accept {
+  background: var(--delivery-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.delivery-btn-accept:hover {
+  background: var(--delivery-primary-dark);
+  transform: translateY(-1px);
+}
+
+.delivery-btn-decline {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.delivery-btn-decline:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Active Delivery */
+.delivery-active-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.delivery-active-header {
+  background: linear-gradient(135deg, var(--delivery-primary) 0%, var(--delivery-secondary) 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.delivery-progress-bar {
+  background: rgba(16, 185, 129, 0.2);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.delivery-progress-fill {
+  background: var(--delivery-primary);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.delivery-status-steps {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+}
+
+.delivery-status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.delivery-status-step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.delivery-status-step.active .delivery-status-step-icon {
+  background: var(--delivery-primary);
+  color: white;
+}
+
+.delivery-status-step.completed .delivery-status-step-icon {
+  background: var(--delivery-primary);
+  color: white;
+}
+
+.delivery-status-step-label {
+  font-size: 0.875rem;
+  color: var(--delivery-text-muted);
+  text-align: center;
+}
+
+.delivery-status-step.active .delivery-status-step-label {
+  color: var(--delivery-primary);
+  font-weight: 600;
+}
+
+/* Delivery Stats */
+.delivery-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.delivery-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  border-left: 4px solid var(--delivery-primary);
+}
+
+.delivery-stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--delivery-primary);
+  margin-bottom: 0.5rem;
+}
+
+.delivery-stat-label {
+  color: var(--delivery-text-secondary);
+  font-weight: 500;
+}
+
+/* Delivery Earnings */
+.delivery-earnings-card {
+  background: linear-gradient(135deg, var(--delivery-primary) 0%, var(--delivery-secondary) 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--delivery-shadow);
+}
+
+.delivery-earnings-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.delivery-earnings-amount {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.delivery-earnings-period {
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+/* Delivery Loading States */
+.delivery-loading-spinner {
+  border: 2px solid rgba(16, 185, 129, 0.2);
+  border-top: 2px solid var(--delivery-primary);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spin 1s linear infinite;
+}
+
+/* Delivery Animations */
+@keyframes deliveryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delivery-fade-in {
+  animation: deliveryFadeIn 0.6s ease-out;
+}
+
+/* Delivery Responsive Design */
+@media (max-width: 768px) {
+  .delivery-login-card {
+    margin: 1rem;
+  }
+  
+  .delivery-dashboard {
+    padding: 1rem;
+  }
+  
+  .delivery-dashboard-header {
+    padding: 1.5rem;
+  }
+  
+  .delivery-dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .delivery-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .delivery-order-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .delivery-order-actions {
+    flex-direction: column;
+  }
+  
+  .delivery-status-steps {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Delivery Success States */
+.delivery-success {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.1);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.delivery-warning {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.delivery-error {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+/* Delivery Location */
+.delivery-location-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  margin-bottom: 1rem;
+}
+
+.delivery-location-title {
+  font-weight: 600;
+  color: var(--delivery-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.delivery-location-address {
+  color: var(--delivery-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
